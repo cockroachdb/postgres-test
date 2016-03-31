@@ -14,6 +14,8 @@ RUN apk add --update \
 	python-dev \
 	# PHP \
 	php-pgsql \
+	php-pdo \
+	php-pdo_pgsql \
 	# Ruby \
 	ruby-pg \
 	&& rm -rf /var/cache/apk/*
