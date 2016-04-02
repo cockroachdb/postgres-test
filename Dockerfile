@@ -12,6 +12,8 @@ RUN apk add --update \
 	# Python \
 	py-pip \
 	python-dev \
+	# Node.js \
+	nodejs \
 	# PHP \
 	php-pgsql \
 	php-pdo \
@@ -21,5 +23,7 @@ RUN apk add --update \
 	&& rm -rf /var/cache/apk/*
 
 RUN pip install psycopg2
+
+RUN npm install pg
 
 RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
