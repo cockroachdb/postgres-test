@@ -27,7 +27,11 @@ RUN npm install pg
 
 RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
 
-RUN git clone https://github.com/cockroachdb/finagle-postgres.git && cd finagle-postgres && git checkout fatjartests && ./sbt assembly && mv target/scala-2.11/finagle-postgres-tests.jar /
+RUN git clone --depth 1 -b fatjartests https://github.com/cockroachdb/finagle-postgres.git && \
+	cd /finagle-postgres && \
+	./sbt assembly && \
+	mv target/scala-2.11/finagle-postgres-tests.jar / && \
+	cd / && rm -rf /finagle-postgres ~/.ivy2
 
 # Download a reference binary that tests can run against.
 ENV REFERENCE_VERSION="beta-20160407"
