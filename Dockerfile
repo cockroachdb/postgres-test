@@ -1,22 +1,25 @@
 FROM java:openjdk-8
 
-RUN apt-get update && apt-get install -y \
+# Debian's stock node package doesn't include npm.
+RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+	apt-get install -y \
 	git \
 	curl \
 	libpq-dev \
+	postgresql \
 	# C \
 	gcc \
+	# Node
+	nodejs \
 	# Python \
 	python-pip \
 	python-dev \
 	# PHP \
+	php5-cli \
 	php5-pgsql \
 	# Ruby \
 	ruby-pg \
 	&& rm -rf /var/lib/apt/lists/*
-
-# Debian's stock node package doesn't include npm.
-RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && apt-get install -y nodejs
 
 RUN pip install psycopg2
 
