@@ -34,7 +34,7 @@ RUN git clone --depth 1 -b fatjartests https://github.com/cockroachdb/finagle-po
 	cd / && rm -rf /finagle-postgres ~/.ivy2
 
 # Download a reference binary that tests can run against.
-ENV REFERENCE_VERSION="beta-20160407"
+ENV REFERENCE_VERSION="beta-20160414"
 
 RUN mkdir /reference-version && \
 	curl -SL https://binaries.cockroachdb.com/cockroach-${REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
