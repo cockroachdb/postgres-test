@@ -7,17 +7,18 @@ RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
 	curl \
 	libpq-dev \
 	postgresql \
-	# C \
+	# C
 	gcc \
+	libpqtypes-dev \
 	# Node
 	nodejs \
-	# Python \
+	# Python
 	python-pip \
 	python-dev \
-	# PHP \
+	# PHP
 	php5-cli \
 	php5-pgsql \
-	# Ruby \
+	# Ruby
 	ruby-pg \
 	&& rm -rf /var/lib/apt/lists/*
 
