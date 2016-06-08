@@ -34,9 +34,16 @@ RUN git clone --depth 1 -b fatjartests https://github.com/cockroachdb/finagle-po
 	mv target/scala-2.11/finagle-postgres-tests.jar / && \
 	cd / && rm -rf /finagle-postgres ~/.ivy2
 
-# Download a reference binary that tests can run against.
-ENV REFERENCE_VERSION="beta-20160414"
+ENV FORWARD_REFERENCE_VERSION="beta-20160414"
 
-RUN mkdir /reference-version && \
-	curl -SL https://binaries.cockroachdb.com/cockroach-${REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
-	mv /tmp/cockroach-${REFERENCE_VERSION}*/* /reference-version
+# Download a reference binary that forward tests can run against.
+RUN mkdir /forward-reference-version && \
+	curl -SL https://binaries.cockroachdb.com/cockroach-${FORWARD_REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
+	mv /tmp/cockroach-${FORWARD_REFERENCE_VERSION}*/* /forward-reference-version
+
+ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20160414"
+
+# Download a reference binary that bidirectional tests can run against.
+RUN mkdir /bidirectional-reference-version && \
+	curl -SL https://binaries.cockroachdb.com/cockroach-${BIDIRECTIONAL_REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
+	mv /tmp/cockroach-${BIDIRECTIONAL_REFERENCE_VERSION}*/* /bidirectional-reference-version
