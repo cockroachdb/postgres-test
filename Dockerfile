@@ -41,7 +41,7 @@ RUN mkdir /forward-reference-version && \
 	curl -SL https://binaries.cockroachdb.com/cockroach-${FORWARD_REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
 	mv /tmp/cockroach-${FORWARD_REFERENCE_VERSION}*/* /forward-reference-version
 
-ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20160414"
+ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20160616"
 
 # Download a reference binary that bidirectional tests can run against.
 RUN mkdir /bidirectional-reference-version && \
