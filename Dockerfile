@@ -24,7 +24,7 @@ RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
 
 RUN pip install psycopg2
 
-RUN npm install pg
+RUN npm install pg@5.0.0
 
 RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
 
