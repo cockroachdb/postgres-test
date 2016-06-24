@@ -1,0 +1,119 @@
+# This is a RocksDB option file.
+#
+# For detailed file format spec, please refer to the example file
+# in examples/rocksdb_option_file_example.ini
+#
+
+[Version]
+  rocksdb_version=4.3.1
+  options_file_version=1.1
+
+[DBOptions]
+  stats_dump_period_sec=600
+  max_manifest_file_size=18446744073709551615
+  bytes_per_sync=0
+  delayed_write_rate=1048576
+  WAL_ttl_seconds=0
+  WAL_size_limit_MB=0
+  max_subcompactions=1
+  wal_dir=/Users/tschottdorf/cockroach-data-20160414-7429
+  wal_bytes_per_sync=0
+  db_write_buffer_size=0
+  keep_log_file_num=1000
+  table_cache_numshardbits=4
+  max_file_opening_threads=1
+  writable_file_max_buffer_size=1048576
+  random_access_max_buffer_size=1048576
+  use_fsync=false
+  max_total_wal_size=0
+  max_open_files=5000
+  skip_stats_update_on_db_open=false
+  max_background_compactions=1
+  manifest_preallocation_size=4194304
+  max_background_flushes=1
+  is_fd_close_on_exec=true
+  max_log_file_size=0
+  advise_random_on_open=true
+  create_missing_column_families=false
+  paranoid_checks=true
+  delete_obsolete_files_period_micros=21600000000
+  disable_data_sync=false
+  log_file_time_to_roll=0
+  compaction_readahead_size=0
+  create_if_missing=true
+  use_adaptive_mutex=false
+  enable_thread_tracking=false
+  disableDataSync=false
+  allow_fallocate=true
+  error_if_exists=false
+  recycle_log_file_num=0
+  skip_log_error_on_recovery=false
+  allow_mmap_reads=false
+  allow_os_buffer=true
+  db_log_dir=
+  new_table_reader_for_compaction_inputs=false
+  allow_mmap_writes=false
+  
+
+[CFOptions "default"]
+  compaction_style=kCompactionStyleLevel
+  compaction_filter=nullptr
+  num_levels=7
+  table_factory=BlockBasedTable
+  comparator=cockroach_comparator
+  max_sequential_skip_in_iterations=8
+  soft_rate_limit=0.000000
+  max_bytes_for_level_base=536870912
+  memtable_prefix_bloom_probes=6
+  memtable_prefix_bloom_bits=0
+  memtable_prefix_bloom_huge_page_tlb_size=0
+  max_successive_merges=0
+  arena_block_size=327680
+  min_write_buffer_number_to_merge=2
+  target_file_size_multiplier=8
+  source_compaction_factor=1
+  max_bytes_for_level_multiplier=8
+  compaction_filter_factory=nullptr
+  max_write_buffer_number=6
+  level0_stop_writes_trigger=24
+  compression=kSnappyCompression
+  level0_file_num_compaction_trigger=2
+  purge_redundant_kvs_while_flush=true
+  max_write_buffer_number_to_maintain=0
+  memtable_factory=SkipListFactory
+  max_grandparent_overlap_factor=10
+  expanded_compaction_factor=25
+  hard_pending_compaction_bytes_limit=0
+  inplace_update_num_locks=10000
+  level_compaction_dynamic_level_bytes=false
+  level0_slowdown_writes_trigger=20
+  filter_deletes=false
+  verify_checksums_in_compaction=true
+  min_partial_merge_operands=2
+  paranoid_file_checks=false
+  target_file_size_base=67108864
+  optimize_filters_for_hits=false
+  merge_operator=cockroach_merge_operator
+  compression_per_level=kSnappyCompression:kSnappyCompression:kSnappyCompression:kSnappyCompression:kSnappyCompression:kSnappyCompression:kSnappyCompression
+  compaction_measure_io_stats=false
+  prefix_extractor=cockroach_prefix_extractor
+  bloom_locality=0
+  write_buffer_size=2621440
+  disable_auto_compactions=false
+  inplace_update_support=false
+  
+[TableOptions/BlockBasedTable "default"]
+  format_version=2
+  whole_key_filtering=true
+  skip_table_builder_flush=false
+  no_block_cache=false
+  checksum=kCRC32c
+  filter_policy=rocksdb.BuiltinBloomFilter
+  block_size_deviation=10
+  block_size=32768
+  block_restart_interval=16
+  cache_index_and_filter_blocks=false
+  index_type=kBinarySearch
+  hash_index_allow_collision=true
+  flush_block_policy_factory=FlushBlockBySizePolicyFactory
+  
