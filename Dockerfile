@@ -51,3 +51,10 @@ RUN mkdir /forward-reference-version && \
 RUN mkdir /bidirectional-reference-version && \
 	curl -SL https://binaries.cockroachdb.com/cockroach-${BIDIRECTIONAL_REFERENCE_VERSION}.linux-amd64.tgz | tar xvz -C /tmp && \
 	mv /tmp/cockroach-${BIDIRECTIONAL_REFERENCE_VERSION}*/* /bidirectional-reference-version
+
+# Install Go compiler, needed for examples-orms tests.
+RUN curl https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz -o golang.tar.gz \
+	&& tar -C /usr/local -xzf golang.tar.gz \
+	&& rm golang.tar.gz
+
+ENV PATH=${PATH}:/usr/local/go/bin
