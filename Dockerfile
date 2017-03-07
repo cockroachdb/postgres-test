@@ -27,12 +27,18 @@ RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
 	php5-cli \
 	php5-pgsql \
 	# Ruby
-	ruby-pg \
+	rbenv \
+	libreadline6-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN pip install psycopg2
 
 RUN npm install pg@5.0.0
+
+RUN git clone --depth=1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+	rbenv install 2.4.0 && \
+	rbenv global 2.4.0 && \
+	rbenv exec gem install pg bundler
 
 RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
 
