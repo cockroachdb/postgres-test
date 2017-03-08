@@ -35,7 +35,7 @@ RUN pip install psycopg2
 
 RUN npm install pg@5.0.0
 
-RUN git clone --depth=1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+RUN git clone --depth=1 --branch=v20170201 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
 	rbenv install 2.4.0 && \
 	rbenv global 2.4.0 && \
 	rbenv exec gem install pg bundler
