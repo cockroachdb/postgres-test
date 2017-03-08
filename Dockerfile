@@ -25,20 +25,21 @@ RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
 	python-dev \
 	# PHP
 	php5-cli \
-	php5-pgsql \
-	# Ruby
-	rbenv \
-	libreadline6-dev \
-	&& rm -rf /var/lib/apt/lists/*
+	php5-pgsql
 
 RUN pip install psycopg2
-
 RUN npm install pg@5.0.0
 
-RUN git clone --depth=1 --branch=v20170201 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
-	rbenv install 2.4.0 && \
-	rbenv global 2.4.0 && \
-	rbenv exec gem install pg bundler
+# Ruby
+RUN mkdir ruby-install && \
+	curl -fsSL https://github.com/postmodern/ruby-install/archive/v0.6.1.tar.gz | tar --strip-components=1 -C ruby-install -xz && \
+	make -C ruby-install install && \
+	ruby-install --system ruby 2.4.0
+
+# Ruby acceptance tests
+RUN gem install pg
+
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
 
@@ -63,4 +64,4 @@ RUN curl https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz -o golan
 	&& tar -C /usr/local -xzf golang.tar.gz \
 	&& rm golang.tar.gz
 
-ENV PATH=${PATH}:/usr/local/go/bin
+ENV PATH /usr/local/go/bin:$PATH
