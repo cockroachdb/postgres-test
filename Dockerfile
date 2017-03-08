@@ -7,7 +7,7 @@ ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20160829"
 ADD cockroach-data-${FORWARD_REFERENCE_VERSION} /cockroach-data-reference-7429
 
 # Debian's stock node package doesn't include npm.
-RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
 	apt-get install -y \
 	git \
 	curl \
