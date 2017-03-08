@@ -28,7 +28,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
 	php5-pgsql
 
 RUN pip install psycopg2
-RUN npm install pg@5.0.0
+RUN npm install pg
 
 # Ruby
 RUN mkdir ruby-install && \
