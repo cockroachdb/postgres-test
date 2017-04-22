@@ -1,10 +1,10 @@
 FROM java:openjdk-8
 
-ENV FORWARD_REFERENCE_VERSION="beta-20160414"
-ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20160829"
-
-# See README in that directory.
-ADD cockroach-data-${FORWARD_REFERENCE_VERSION} /cockroach-data-reference-7429
+# The forward reference version is the oldest version from which we
+# support upgrading. The bidirectional reference version is the oldest
+# version that we support upgrading from and downgrading to.
+ENV FORWARD_REFERENCE_VERSION="beta-20170413"
+ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20170413"
 
 # Debian's stock node package doesn't include npm.
 RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
