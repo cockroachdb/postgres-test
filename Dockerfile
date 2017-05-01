@@ -27,6 +27,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
 	php5-cli \
 	php5-pgsql
 
+RUN curl -fsSL -O https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64.deb \
+ && dpkg -i dumb-init_1.2.0_amd64.deb && rm dumb-init_1.2.0_amd64.deb
+
 RUN pip install psycopg2
 RUN npm install pg
 
