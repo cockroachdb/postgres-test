@@ -12,6 +12,7 @@ convention, tags are of the form YYYYMMDD-HHMM.
 
 Iterating on this image locally
 [requires a local Docker registry](http://stackoverflow.com/a/35166297).
+
 - Run `docker run -d -p 5000:5000 --restart=always --name registry registry:2`
-- In this repo, run `docker build -t localhost:5000/cockroachdb/postgres-test:foo` and `docker push localhost:5000/cockroachdb/postgres-test:foo`
-- In `cockroach/pkg/acceptance/util.go`, edit the constant `postgresTestImage` to point to `localhost:5000/cockroachdb/postgres-test:foo` instead of `docker.io/cockroachdb/cockroach:$DATE`.
+- In this repo, run `docker build -t cockroachdb/postgres-test:foo .` and `docker push cockroachdb/postgres-test:foo`
+- In `cockroach/pkg/acceptance/util.go`, edit the constant `postgresTestImage` to point to `cockroachdb/postgres-test:foo` instead of `docker.io/cockroachdb/cockroach:$DATE`.
