@@ -8,24 +8,56 @@ ENV BIDIRECTIONAL_REFERENCE_VERSION="beta-20170413"
 
 # Debian's stock node package doesn't include npm.
 RUN curl -fsSL https://deb.nodesource.com/setup_6.x | bash - && \
-	apt-get install -y \
-	git \
+	apt-get update -y && \
+	apt-get upgrade -y
+
+# Prereqs for dotnet
+RUN apt-get install -y \
 	curl \
+	libunwind8 \
+	gettext \
+	apt-transport-https
+
+# Register the trusted Microsoft Product Key and Product Feed
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+	mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+	sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-jessie-prod jessie main" > /etc/apt/sources.list.d/dotnetdev.list'
+
+# The basics
+RUN apt-get update -y && \
+  apt-get install -y \
+	git \
 	libpq-dev \
 	postgresql \
-	# acceptance/cli_test.go
-	expect \
-	# C
+	vim
+
+# acceptance/cli_test.go
+RUN apt-get install -y \
+	expect
+
+# C
+RUN apt-get install -y \
 	gcc \
-	libpqtypes-dev \
-	# Node
-	nodejs \
-	# Python
+	libpqtypes-dev
+
+# Node
+RUN apt-get install -y \
+	nodejs
+
+# Python
+RUN apt-get install -y \
 	python-pip \
-	python-dev \
-	# PHP
+	python-dev
+
+# PHP
+RUN apt-get install -y \
 	php5-cli \
 	php5-pgsql
+
+# dotnet
+RUN apt-get install -y \
+	dotnet-sdk-2.0.0 \
+	nuget
 
 RUN pip install psycopg2
 RUN npm install pg
@@ -60,8 +92,13 @@ RUN mkdir /bidirectional-reference-version && \
 	mv /tmp/cockroach-${BIDIRECTIONAL_REFERENCE_VERSION}*/* /bidirectional-reference-version
 
 # Install Go compiler, needed for examples-orms tests.
-RUN curl https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz -o golang.tar.gz \
+RUN curl https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz -o golang.tar.gz \
 	&& tar -C /usr/local -xzf golang.tar.gz \
 	&& rm golang.tar.gz
 
-ENV PATH /usr/local/go/bin:$PATH
+# Install npgsql and create a local a feed.
+RUN mkdir /nuget && \
+  echo '<?xml version="1.0" encoding="utf-8"?><configuration><packageSources><add key="local-packages" value="." /></packageSources></configuration>' > /nuget/NuGet.Config && \
+	curl -fsSL https://www.nuget.org/api/v2/package/Npgsql/3.2.5 > /nuget/npgsql.3.2.5.nupkg
+
+ENV PATH /usr/local/go/bin:$HOME/dotnet:$PATH
