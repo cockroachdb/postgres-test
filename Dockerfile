@@ -71,9 +71,18 @@ RUN mkdir ruby-install && \
 # Ruby acceptance tests
 RUN gem install pg
 
-RUN rm -rf /var/lib/apt/lists/*
+# Java/Maven
 
-RUN curl -SL https://jdbc.postgresql.org/download/postgresql-9.4.1207.jar > /postgres.jar
+# There doesn't appear to be a good way to install maven via apt-get on the
+# base image we're running off of.
+RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
+  && curl -fsSL -o /tmp/apache-maven.tar.gz https://apache.osuosl.org/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz \
+  && echo "beb91419245395bd69a4a6edad5ca3ec1a8b64e41457672dc687c173a495f034  /tmp/apache-maven.tar.gz" | sha256sum -c - \
+  && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
+  && rm -f /tmp/apache-maven.tar.gz \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 -b fatjartests https://github.com/cockroachdb/finagle-postgres.git && \
 	cd /finagle-postgres && \
