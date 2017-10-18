@@ -15,4 +15,4 @@ Iterating on this image locally
 
 - Run `docker run -d -p 5000:5000 --restart=always --name registry registry:2`
 - In this repo, run `docker build -t cockroachdb/postgres-test:foo .` and `docker push cockroachdb/postgres-test:foo`
-- In `cockroach/pkg/acceptance/util.go`, edit the constant `postgresTestImage` to point to `cockroachdb/postgres-test:foo` instead of `docker.io/cockroachdb/cockroach:$DATE`.
+- In `cockroach/pkg/acceptance/util_docker.go`, edit the constant `postgresTestImage` to point to `cockroachdb/postgres-test:foo` instead of `docker.io/cockroachdb/cockroach:$DATE`.
