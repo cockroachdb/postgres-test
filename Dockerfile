@@ -44,6 +44,8 @@ RUN apt-get install -y \
 RUN apt-get install -y \
 	nodejs
 
+RUN npm install -g pg@7.3.0 mocha@4.0.1 pg-error-codes@1.0.0
+
 # Python
 RUN apt-get install -y \
 	python-pip \
@@ -60,7 +62,6 @@ RUN apt-get install -y \
 	nuget
 
 RUN pip install psycopg2
-RUN npm install pg
 
 # Ruby
 RUN mkdir ruby-install && \
@@ -81,6 +82,11 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+# This pom.xml mirrors the one in the main Cockroach repo at pkg/acceptance/testdata/java.
+RUN echo '<?xml version="1.0" encoding="UTF-8"?> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"> <modelVersion>4.0.0</modelVersion> <groupId>java</groupId> <artifactId>java</artifactId> <version>1.0-SNAPSHOT</version> <dependencies> <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> <version>4.8.1</version> </dependency> <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> <version>42.1.4</version> </dependency> <dependency> <groupId>org.apache.maven.surefire</groupId> <artifactId>surefire-junit4</artifactId> <version>2.12.4</version> </dependency> </dependencies> <build> <testSourceDirectory>src/main</testSourceDirectory> </build> </project> ' > pom.xml
+
+RUN mvn dependency:go-offline
 
 RUN rm -rf /var/lib/apt/lists/*
 
