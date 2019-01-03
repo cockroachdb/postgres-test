@@ -67,7 +67,8 @@ RUN pip install psycopg2
 RUN mkdir ruby-install && \
 	curl -fsSL https://github.com/postmodern/ruby-install/archive/v0.6.1.tar.gz | tar --strip-components=1 -C ruby-install -xz && \
 	make -C ruby-install install && \
-	ruby-install --system ruby 2.4.0
+	ruby-install --system ruby 2.4.0 && \
+	gem update --system
 
 # Ruby acceptance tests
 RUN gem install pg
@@ -77,8 +78,8 @@ RUN gem install pg
 # There doesn't appear to be a good way to install maven via apt-get on the
 # base image we're running off of.
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
-  && curl -fsSL -o /tmp/apache-maven.tar.gz https://apache.osuosl.org/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz \
-  && echo "beb91419245395bd69a4a6edad5ca3ec1a8b64e41457672dc687c173a495f034  /tmp/apache-maven.tar.gz" | sha256sum -c - \
+  && curl -fsSL -o /tmp/apache-maven.tar.gz https://apache.osuosl.org/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz \
+  && echo "6a1b346af36a1f1a491c1c1a141667c5de69b42e6611d3687df26868bc0f4637  /tmp/apache-maven.tar.gz" | sha256sum -c - \
   && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
